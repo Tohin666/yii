@@ -22,12 +22,12 @@ class TaskController extends Controller
             return $this->render('index', ['model' => $model]);
         }
 
+
+
 //        return $this->render('index', [
 //            'title' => 'Tasks',
 //            'text' => 'Hell word!'
 //        ]);
-
-
 
 //        \Yii::$app->request->get('id');
 

@@ -128,7 +128,6 @@ class SiteController extends Controller
     }
 
 
-
     public function actionEntry()
     {
         $model = new EntryForm();
