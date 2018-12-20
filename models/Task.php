@@ -1,15 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tohin
- * Date: 20-Dec-18
- * Time: 8:03 AM
- */
 
 namespace app\models;
 
+use yii\base\Model;
 
-class Task extends \yii\base\BaseObject
+class Task extends Model
 {
     public $id;
     public $name;
@@ -18,4 +13,23 @@ class Task extends \yii\base\BaseObject
     public $status;
     public $start;
     public $end;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function rules()
+    {
+        return [
+            [['name', 'responsible', 'start',], 'required'],
+            [['name', 'description', 'responsible', 'status'], 'string'],
+            ['status', 'default', 'value' => 'New'],
+            [['start', 'end'], 'app\components\validators\MyValidator']
+//            // it's my validation. На js проверки не будет.
+//            ['name', 'myValidate'],
+//            [['start', 'end'], 'safe']
+        ];
+
+    }
 }

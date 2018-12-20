@@ -2,7 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\ContactForm;
+use Yii;
+use app\models\Task;
 use yii\web\Controller;
 
 class TaskController extends Controller
@@ -10,9 +11,25 @@ class TaskController extends Controller
 
     public function actionIndex()
     {
-//        \Yii::$app->request->get('id');
+        $model = new Task();
 
-        $model = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            return $this->render('task-confirm', ['model' => $model]);
+
+        } else {
+            // либо страница отображается первый раз, либо есть ошибка в данных
+            return $this->render('index', ['model' => $model]);
+        }
+
+//        return $this->render('index', [
+//            'title' => 'Tasks',
+//            'text' => 'Hell word!'
+//        ]);
+
+
+
+//        \Yii::$app->request->get('id');
 
 //        // Каждый объект можно проинициализировать передав в конструктор массив с именами атрибутов и значениями.
 //        $model = new ContactForm([
@@ -39,9 +56,6 @@ class TaskController extends Controller
 //            'SomeOtherForm' => ['someData']
 //        ]);
 
-        return $this->render('index', [
-            'title' => 'Yii2',
-            'text' => 'Hell word!'
-        ]);
+
     }
 }
