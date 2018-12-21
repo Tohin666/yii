@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\validators\MyValidator;
 use yii\base\Model;
 
 class Task extends Model
@@ -25,7 +26,8 @@ class Task extends Model
             [['name', 'responsible', 'start',], 'required'],
             [['name', 'description', 'responsible', 'status'], 'string'],
             ['status', 'default', 'value' => 'New'],
-            [['start', 'end'], 'app\components\validators\MyValidator']
+//            [['start', 'end'], 'app\components\validators\MyValidator']
+            [['start', 'end'], MyValidator::class]
 //            // it's my validation. На js проверки не будет.
 //            ['name', 'myValidate'],
 //            [['start', 'end'], 'safe']
