@@ -2,13 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\tables\Tasks;
 use yii\web\Controller;
 use yii\data\Pagination;
 use app\models\Country;
 
 class DbController extends Controller
 {
-    function actionIndex()
+    public function actionIndex()
     {
 //        \Yii::$app->db->createCommand("
 //            INSERT INTO test (title, content) VALUES ('newtitle', 'newcont')
@@ -61,5 +62,27 @@ class DbController extends Controller
 
 
     }
+
+    public function actionAr()
+    {
+//        $model = new Tasks();
+//        $model->title = 'Task2';
+//        $model->description = 'This other desc';
+//        $model->date = date("Y-m-d");
+//        $model->responsible_id = 2;
+//        $model->save();
+
+
+//        $model = Tasks::findOne(2); // ищет по праймарики
+//        $model = Tasks::findOne(['title' => 'Task1']);
+//        var_dump($model);
+//        var_dump(Tasks::findAll([1,2,4])); // работатет только так
+//        var_dump(Tasks::find()->all()); // а так выбрать все
+
+
+    }
+
+
+
 
 }
