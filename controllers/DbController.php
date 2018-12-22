@@ -4,9 +4,9 @@ namespace app\controllers;
 
 use app\models\tables\Tasks;
 use app\models\tables\Users;
+use app\models\tables\Country;
 use yii\web\Controller;
 use yii\data\Pagination;
-use app\models\Country;
 
 class DbController extends Controller
 {
