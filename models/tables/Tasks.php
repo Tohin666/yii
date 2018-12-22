@@ -12,6 +12,9 @@ use Yii;
  * @property string $date
  * @property string $description
  * @property int $responsible_id
+ *
+ * @property Test $test
+ * @property Users $users
  */
 class Tasks extends \yii\db\ActiveRecord
 {
@@ -49,5 +52,20 @@ class Tasks extends \yii\db\ActiveRecord
             'description' => 'Description',
             'responsible_id' => 'Responsible ID',
         ];
+    }
+
+
+    public function getTest() // test прописали вверху
+    {
+        // hasOne - связь "один к одному", hasAll - "один ко многим", а "многи ко многим" через via
+        return $this->hasOne(Test::class, ["id" => "responsible_id"]); // у казываем класс с которым свзязываем
+        // и по каким параметрам. (типа форынки)
+    }
+
+
+    public function getUsers()
+    {
+        return $this->hasOne(Users::class, ["id" => "responsible_id"]);
+
     }
 }

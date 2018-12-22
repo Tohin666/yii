@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\tables\Tasks;
+use app\models\tables\Users;
 use yii\web\Controller;
 use yii\data\Pagination;
 use app\models\Country;
@@ -80,6 +81,27 @@ class DbController extends Controller
 //        var_dump(Tasks::find()->all()); // а так выбрать все
 
 
+//        $model = new Users();
+//        $model->username = 'Petya';
+//        $model->password = 'parol';
+//        $model->save();
+
+    }
+
+    public function actionFind()
+    {
+//        $tasks = Tasks::findOne(2);
+//        var_dump($tasks->test); // связь по test прописали в классе Tasks
+
+//        // присоединит данные из test
+//        $tasks = Tasks::find()
+//            ->with("test")
+//            ->all();
+
+        $tasks = Tasks::find()
+            ->with("users")
+            ->all();
+        var_dump($tasks);
     }
 
 
