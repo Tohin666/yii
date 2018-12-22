@@ -9,9 +9,9 @@ use yii\widgets\ActiveForm;
 
 <?php $form = ActiveForm::begin(); ?>
 
-<?= $form->field($model, 'name') ?>
+<?= $form->field($model, 'title') ?>
 <?= $form->field($model, 'description') ?>
-<?= $form->field($model, 'responsible') ?>
+<?= $form->field($model, 'responsible_id') ?>
 <?= $form->field($model, 'status') ?>
 <?= $form->field($model, 'start') ?>
 <?= $form->field($model, 'end') ?>

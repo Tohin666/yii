@@ -8,9 +8,9 @@ use yii\base\Model;
 class Task extends Model
 {
     public $id;
-    public $name;
+    public $title;
     public $description;
-    public $responsible;
+    public $responsible_id;
     public $status;
     public $start;
     public $end;
@@ -23,8 +23,9 @@ class Task extends Model
     public function rules()
     {
         return [
-            [['name', 'responsible', 'start',], 'required'],
-            [['name', 'description', 'responsible', 'status'], 'string'],
+            [['title', 'responsible_id', 'start',], 'required'],
+            [['title', 'description', 'status'], 'string'],
+            ['responsible_id', 'number', 'min' => 0],
             ['status', 'default', 'value' => 'New'],
 //            [['start', 'end'], 'app\components\validators\MyValidator']
             [['start', 'end'], MyValidator::class]
@@ -34,4 +35,17 @@ class Task extends Model
         ];
 
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'title' => 'Название задачи',
+            'description' => 'Описание',
+            'responsible_id' => 'Ответственный',
+            'status' => 'Статус',
+            'start' => 'Начало',
+            'end'=> 'Окончание'
+        ];
+    }
+
 }
