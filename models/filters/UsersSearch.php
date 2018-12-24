@@ -1,16 +1,15 @@
 <?php
 
-namespace app\models;
+namespace app\models\filters;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\tables\Country;
+use app\models\tables\Users;
 
 /**
- * TODO Надо бы перенести в filters
- * CountrySearch represents the model behind the search form of `app\models\tables\Country`.
+ * UsersSearch represents the model behind the search form of `app\models\tables\Users`.
  */
-class CountrySearch extends Country
+class UsersSearch extends Users
 {
     /**
      * {@inheritdoc}
@@ -18,8 +17,8 @@ class CountrySearch extends Country
     public function rules()
     {
         return [
-            [['code', 'name'], 'safe'],
-            [['population'], 'integer'],
+            [['id', 'role_id'], 'integer'],
+            [['username', 'password', 'email', 'authKey', 'accessToken'], 'safe'],
         ];
     }
 
@@ -41,7 +40,7 @@ class CountrySearch extends Country
      */
     public function search($params)
     {
-        $query = Country::find();
+        $query = Users::find();
 
         // add conditions that should always apply here
 
@@ -59,11 +58,15 @@ class CountrySearch extends Country
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'population' => $this->population,
+            'id' => $this->id,
+            'role_id' => $this->role_id,
         ]);
 
-        $query->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'password', $this->password])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'authKey', $this->authKey])
+            ->andFilterWhere(['like', 'accessToken', $this->accessToken]);
 
         return $dataProvider;
     }

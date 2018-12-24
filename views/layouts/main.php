@@ -40,6 +40,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Hello!', 'url' => ['/hello/index']],
             ['label' => 'Tasks', 'url' => ['/task/index']],
+            ['label' => 'Users', 'url' => ['/admin-users/index']],
             ['label' => 'db', 'url' => ['/db/index']],
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
