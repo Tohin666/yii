@@ -12,6 +12,8 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public $authKey;
     public $accessToken;
 
+    public $email;
+
 //    private static $users = [
 //        '100' => [
 //            'id' => '100',
@@ -36,12 +38,10 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public static function findIdentity($id)
     {
 
-        $users = Users::find()->all();
-        foreach ($users as $user) {
-        if ($user['id'] === $id) {
-            return new static($user);
+        if ($user = Users::findOne($id)) {
+            return new static($user->toArray());
         }
-    }
+
         return null;
 
 //        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
@@ -84,14 +84,12 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
 //        }
 
 
-        $users = Users::find()->all();
-
-        foreach ($users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
+        if ($user = Users::findOne(['username' => $username])) {
+            $user->setScenario(Users::SCENARIO_AUTH);
+//            // или так:
+//            $user->scenario = Users::SCENARIO_AUTH;
+            return new static($user->toArray());
         }
-
 
         return null;
     }
@@ -130,4 +128,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     {
         return $this->password === $password;
     }
+
+
+
 }
