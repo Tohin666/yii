@@ -33,8 +33,7 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'date'], 'required'],
-            [['date'], 'safe'],
-            [['description'], 'string'],
+            [['description', 'date'], 'string'],
             [['responsible_id'], 'integer'],
             [['title'], 'string', 'max' => 255],
         ];
@@ -57,7 +56,7 @@ class Tasks extends \yii\db\ActiveRecord
 
     public function getTest() // test прописали вверху
     {
-        // hasOne - связь "один к одному", hasAll - "один ко многим", а "многи ко многим" через via
+        // hasOne - связь "один к одному", hasAll - "один ко многим", а "многие ко многим" через via
         return $this->hasOne(Test::class, ["id" => "responsible_id"]); // у казываем класс с которым свзязываем
         // и по каким параметрам. (типа форынки)
     }

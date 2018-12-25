@@ -13,6 +13,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public $accessToken;
 
     public $email;
+    public $role_id;
 
 //    private static $users = [
 //        '100' => [

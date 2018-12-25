@@ -52,6 +52,7 @@ class Users extends \yii\db\ActiveRecord
             'password' => 'Password',
             'authKey' => 'Auth Key',
             'accessToken' => 'Access Token',
+            'role_id' => 'Role',
         ];
     }
 

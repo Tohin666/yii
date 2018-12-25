@@ -39,8 +39,9 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Hello!', 'url' => ['/hello/index']],
-            ['label' => 'Tasks', 'url' => ['/task/index']],
             ['label' => 'Users', 'url' => ['/admin-users/index']],
+            ['label' => 'Admin-Tasks', 'url' => ['/admin-tasks/index']],
+            ['label' => 'Tasks', 'url' => ['/task/index']],
             ['label' => 'db', 'url' => ['/db/index']],
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
