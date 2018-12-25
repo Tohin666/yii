@@ -34,4 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+
+<!--    --><?//= \yii\widgets\ListView::widget([
+//        'dataProvider' => $dataProvider, // коллекция моделей
+//        'itemView' => 'view', // каждую модель отдельно передает во вьюху
+//
+//    ]); ?>
 </div>
