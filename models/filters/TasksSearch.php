@@ -60,6 +60,7 @@ class TasksSearch extends Tasks
         }
 
         // grid filtering conditions
+        // andFilterWhere в отличие от andWhere фильтрует только по тем значениям которые установлены
         $query->andFilterWhere([
             'id' => $this->id,
             'date' => $this->date,
