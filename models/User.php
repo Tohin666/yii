@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\tables\Roles;
 use app\models\tables\Users;
 
 class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
@@ -130,6 +131,16 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
         return $this->password === $password;
     }
 
+
+
+//    public function getRoles()
+//    {
+//        // Метод find объекта ActiveQuery подготавливает запрос. select делает выборку по колонкам role_id и id.
+//        // indexBy сопоставляет индексы массива, который вернул селект, с индетификаторами колонки id.
+//        // column выбирает только первую колонку.
+//        return Roles::find()->select(['name', 'id'])->indexBy('id')->column();
+//
+//    }
 
 
 }

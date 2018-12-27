@@ -19,6 +19,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Tasks', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+
+<!--    --><?php //echo \app\widgets\MyWidget::widget(['label' => 'Другой лейбл']);?>
+
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -35,9 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-<!--    --><?//= \yii\widgets\ListView::widget([
-//        'dataProvider' => $dataProvider, // коллекция моделей
-//        'itemView' => 'view', // каждую модель отдельно передает во вьюху
-//
-//    ]); ?>
+    <?= \yii\widgets\ListView::widget([
+        'dataProvider' => $dataProvider, // коллекция моделей
+        'itemView' => 'view', // каждую модель отдельно передает во вьюху
+
+    ]); ?>
 </div>

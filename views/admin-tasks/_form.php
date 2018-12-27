@@ -18,10 +18,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'responsible_id')->dropDownList(
-        \app\models\tables\Users::find()->select(['username', 'id'])->indexBy('id')->column(),
+    <?= $form->field($model, 'responsible_id')->dropDownList($userList,
         ['prompt' => 'Select Responsible']
     ) ?>
+
+<!--    --><?//= $form->field($model, 'responsible_id')->dropDownList(
+//        \app\models\tables\Users::find()->select(['username', 'id'])->indexBy('id')->column(),
+//        ['prompt' => 'Select Responsible']
+//    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
