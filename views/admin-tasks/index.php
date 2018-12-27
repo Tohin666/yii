@@ -19,25 +19,29 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Tasks', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'title',
-            'date',
-            'description:ntext',
-            'responsible_id',
+<!--    --><?php //echo \app\widgets\MyWidget::widget(['label' => 'Другой лейбл']);?>
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
 
-<!--    --><?//= \yii\widgets\ListView::widget([
-//        'dataProvider' => $dataProvider, // коллекция моделей
-//        'itemView' => 'view', // каждую модель отдельно передает во вьюху
+<!--    --><?//= GridView::widget([
+//        'dataProvider' => $dataProvider,
+//        'filterModel' => $searchModel,
+//        'columns' => [
+//            ['class' => 'yii\grid\SerialColumn'],
 //
+//            'id',
+//            'title',
+//            'date',
+//            'description:ntext',
+//            'responsible_id',
+//
+//            ['class' => 'yii\grid\ActionColumn'],
+//        ],
 //    ]); ?>
+
+    <?= \yii\widgets\ListView::widget([
+        'dataProvider' => $dataProvider, // коллекция моделей
+        'itemView' => 'view', // каждую модель отдельно передает во вьюху
+
+    ]); ?>
 </div>
