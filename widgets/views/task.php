@@ -1,6 +1,7 @@
 <?php /* @var $model \app\models\Task */ ?>
 
-<a href="http://yii/index.php?r=admin-tasks/view&id=1">
+<!--<a href="http://yii/index.php?r=admin-tasks/view&id=1"> //использование домена в ссылках - плохая практика.-->
+<a href="<?= \yii\helpers\Url::toRoute(['admin-tasks/view', 'id' => $model->id]) ?>">
     <div class="bg-info" style="
             /*background: #f5f5f5;*/
             border-radius: 10px;
