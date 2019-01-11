@@ -9,6 +9,8 @@ use yii\grid\GridView;
 
 $this->title = 'Tasks';
 $this->params['breadcrumbs'][] = $this->title;
+
+//var_dump($dataProvider);
 ?>
 <div class="tasks-index">
 
@@ -39,9 +41,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-    <?= \yii\widgets\ListView::widget([
-        'dataProvider' => $dataProvider, // коллекция моделей
-        'itemView' => 'view', // каждую модель отдельно передает во вьюху
-
-    ]); ?>
 </div>

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\tables\Roles;
 use Yii;
 use app\models\tables\Users;
 use app\models\filters\UsersSearch;
@@ -72,6 +73,7 @@ class AdminUsersController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'roles' => Roles::getRoles(),
         ]);
     }
 

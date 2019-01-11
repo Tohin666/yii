@@ -2,17 +2,27 @@
 
 namespace app\widgets;
 
+use app\models\tables\Tasks;
 use yii\base\Widget;
 
 class TaskWidget extends Widget
 {
     public $label = 'Виджет!';
+
+    // виджету передается модель, он сам не делает запрос, чтобы его можно было конфигурировать
     public $model;
 
     // метод ран вызывается когда вызывается widget или end
-    public function run()    {
+    public function run() {
 
-        return $this->render('task', ['model' => $this->model]);
+        // проверяем является ли наша модель экземпляром класса таскс
+        if (is_a($this->model, Tasks::class)) {
+            return $this->render('task', ['model' => $this->model]);
+        }
+
+        // иначе вызываем исключение
+        throw new \Exception("Невозможно отобразить модель!");
+
     }
 
 

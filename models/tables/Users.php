@@ -3,6 +3,7 @@
 namespace app\models\tables;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "users".
@@ -87,5 +88,20 @@ class Users extends \yii\db\ActiveRecord
 
     }
 
+
+    public static function getUsersList()
+    {
+        $users = static::find() // выбираем юзеров из таблицы юзерс
+        ->select(['id', 'username']) // выбираем только айди и имя
+        ->asArray() // получаем в виде массива
+        ->all();
+
+        // в качестве индексов массива юзерс проставляем айдишники, а в качестве значений юзернейм.
+        return ArrayHelper::map($users, 'id', 'username');
+
+//        // можно и так:
+//        return static::find()->select(['username', 'id'])->indexBy('id')->column();
+
+    }
 
 }

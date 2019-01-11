@@ -62,6 +62,7 @@ class Tasks extends \yii\db\ActiveRecord
     }
 
 
+    // геттер
     public function getUsers()
     {
         return $this->hasOne(Users::class, ["id" => "responsible_id"]);

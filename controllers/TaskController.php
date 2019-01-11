@@ -2,8 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\tables\Tasks;
 use Yii;
 use app\models\Task;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 
 class TaskController extends Controller
@@ -11,16 +13,31 @@ class TaskController extends Controller
 
     public function actionIndex()
     {
-        $model = new Task();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//        $model = new Task();
+//
+//        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//
+//            return $this->render('task-confirm', ['model' => $model]);
+//
+//        } else {
+//            // либо страница отображается первый раз, либо есть ошибка в данных
+//            return $this->render('index', ['model' => $model]);
+//        }
 
-            return $this->render('task-confirm', ['model' => $model]);
 
-        } else {
-            // либо страница отображается первый раз, либо есть ошибка в данных
-            return $this->render('index', ['model' => $model]);
-        }
+
+        // подготавливаем датапровайдер для списка тасков (листвью)
+        $dataProvider = new ActiveDataProvider([
+            'query' => Tasks::find()
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider
+        ]);
+
+
+
 
 
 
@@ -58,4 +75,11 @@ class TaskController extends Controller
 
 
     }
+
+
+    public function actionView($id)
+    {
+        echo 'Task ' . $id;
+    }
+
 }

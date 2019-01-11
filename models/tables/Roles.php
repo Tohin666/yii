@@ -50,4 +50,14 @@ class Roles extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Users::className(), ['role_id' => 'id']);
     }
+
+
+    public static function getRoles()
+    {
+        // Метод find объекта ActiveQuery подготавливает запрос. select делает выборку по колонкам role_id и id.
+        // indexBy сопоставляет индексы массива, который вернул селект, с индетификаторами колонки id.
+        // column выбирает только первую колонку.
+        return static::find()->select(['name', 'id'])->indexBy('id')->column();
+
+    }
 }

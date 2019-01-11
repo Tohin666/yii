@@ -72,18 +72,11 @@ class AdminTasksController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        $users = Users::find() // выбираем юзеров из таблицы юзерс
-            ->select(['id', 'username']) // выбираем только айди и имя
-            ->asArray() // получаем в виде массива
-            ->all();
-
-        // в качестве индексов массива юзерс проставляем айдишники, а в качестве значений юзернейм.
-        $userList = ArrayHelper::map($users, 'id', 'username');
 
         return $this->render('create', [
             'model' => $model,
-            'userList' => $userList, // передаем дополнительно наш список пользователей в шаблон create,а там еще раз
-            // передаем в шаблон _form
+            'userList' => Users::getUsersList(), // получаем и передаем дополнительно наш список пользователей в шаблон
+            // create,а там еще раз передаем в шаблон _form
         ]);
     }
 
