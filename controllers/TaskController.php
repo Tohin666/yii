@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\tables\Tasks;
+use app\models\tables\Users;
 use Yii;
 use app\models\Task;
 use yii\data\ActiveDataProvider;
@@ -79,7 +80,9 @@ class TaskController extends Controller
 
     public function actionView($id)
     {
-        echo 'Task ' . $id;
+        $model = Tasks::findOne($id);
+
+        return $this->render('view', ['model' => $model]);
     }
 
 }

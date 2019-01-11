@@ -97,6 +97,8 @@ class AdminTasksController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'userList' => Users::getUsersList(), // получаем и передаем дополнительно наш список пользователей в шаблон
+            // create,а там еще раз передаем в шаблон _form
         ]);
     }
 

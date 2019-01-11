@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'userList' => $userList, // пробрасываем список пользователей дальше
     ]) ?>
 
 </div>

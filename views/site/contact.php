@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
+
 /* @var $model app\models\ContactForm */
 
 use yii\helpers\Html;
@@ -26,7 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php if (Yii::$app->mailer->useFileTransport): ?>
                 Because the application is in development mode, the email is not sent but saved as
                 a file under <code><?= Yii::getAlias(Yii::$app->mailer->fileTransportPath) ?></code>.
-                Please configure the <code>useFileTransport</code> property of the <code>mail</code>
+                                                                                                    Please configure the
+                <code>useFileTransport</code> property of the <code>mail</code>
                 application component to be false to enable email sending.
             <?php endif; ?>
         </p>
@@ -43,21 +45,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
-                    <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
 
-                    <?= $form->field($model, 'email') ?>
+                <?= $form->field($model, 'email') ?>
 
-                    <?= $form->field($model, 'subject') ?>
+                <?= $form->field($model, 'subject') ?>
 
-                    <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
+                <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
 
-                    <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
-                        'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
-                    ]) ?>
+                <!-- Активформ использует свои виджеты для отображения html элементов ввода.-->
+                <!-- Также он может использовать и другие виджеты:-->
+                <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
+                    //template - это шаблон html
+                    'template' =>
+                        '<div class="row">
+                                <!-- плейсхолдеры для отображения картинки и поля ввода капчи соответственно-->
+                                <div class="col-lg-3">{image}</div>
+                                <div class="col-lg-6">{input}</div>
+                            </div>',
+                ]) ?>
 
-                    <div class="form-group">
-                        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
-                    </div>
+                <div class="form-group">
+                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                </div>
 
                 <?php ActiveForm::end(); ?>
 

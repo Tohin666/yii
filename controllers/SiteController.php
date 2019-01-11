@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\actions\HelloAction;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -42,6 +43,9 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
+    // Экшены контроллера могут существовать не только в виде методов, но и в виде классов. Данные классы-экшены можно
+    // через конфигурацию подсоединить к контроллеру, в ключах указав названия контроллеров. В классе-экшене надо
+    // переопределить метод ран.
     public function actions()
     {
         return [
@@ -52,6 +56,9 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+            'hello' => [
+                'class' => HelloAction::class
+            ]
         ];
     }
 

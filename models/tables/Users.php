@@ -4,6 +4,7 @@ namespace app\models\tables;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "users".
@@ -20,6 +21,32 @@ use yii\helpers\ArrayHelper;
 class Users extends \yii\db\ActiveRecord
 {
     const SCENARIO_AUTH = 'auth';
+
+
+//    // добавляем поведение для добавления временных меток в таблицу при изменении или создании записи.
+//    public function behaviors()
+//    {
+//        return [
+//            [
+//                'class' => TimestampBehavior::class,
+//                'attributes' => [
+//                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+//                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+//                ],
+//            ],
+//        ];
+//    }
+
+    // тут попробовал по другому
+    public function behaviors()
+    {
+       return [
+           TimestampBehavior::class,
+       ];
+    }
+
+
+
 
     /**
      * {@inheritdoc}

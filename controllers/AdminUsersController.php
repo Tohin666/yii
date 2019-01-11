@@ -94,6 +94,7 @@ class AdminUsersController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'roles' => Roles::getRoles(),
         ]);
     }
 
