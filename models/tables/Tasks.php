@@ -78,7 +78,7 @@ class Tasks extends ActiveRecord
     }
 
 
-    // геттер
+    // геттер. при запросе ответственного привяжет его имя по айди. название метода немного не правильное.
     public function getUsers()
     {
         return $this->hasOne(Users::class, ["id" => "responsible_id"]);
