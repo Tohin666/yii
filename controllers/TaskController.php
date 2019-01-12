@@ -3,9 +3,6 @@
 namespace app\controllers;
 
 use app\models\tables\Tasks;
-use app\models\tables\Users;
-use Yii;
-use app\models\Task;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 
@@ -27,7 +24,6 @@ class TaskController extends Controller
 //        }
 
 
-
         // подготавливаем датапровайдер для списка тасков (листвью)
         $dataProvider = new ActiveDataProvider([
             'query' => Tasks::find()
@@ -36,10 +32,6 @@ class TaskController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider
         ]);
-
-
-
-
 
 
 //        return $this->render('index', [

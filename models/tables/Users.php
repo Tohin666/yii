@@ -2,7 +2,6 @@
 
 namespace app\models\tables;
 
-use Yii;
 use yii\helpers\ArrayHelper;
 use yii\behaviors\TimestampBehavior;
 
@@ -40,12 +39,10 @@ class Users extends \yii\db\ActiveRecord
     // тут попробовал по другому
     public function behaviors()
     {
-       return [
-           TimestampBehavior::class,
-       ];
+        return [
+            TimestampBehavior::class,
+        ];
     }
-
-
 
 
     /**
@@ -102,7 +99,7 @@ class Users extends \yii\db\ActiveRecord
     public function fields()
     {
         // Мы назначили константу SCENARIO_AUTH. Если в классе User сработает этот сценарий, то передадутся эти поля:
-        if ($this->scenario == self::SCENARIO_AUTH){
+        if ($this->scenario == self::SCENARIO_AUTH) {
             return [
                 'id',
                 'username',
@@ -118,9 +115,9 @@ class Users extends \yii\db\ActiveRecord
 
     public static function getUsersList()
     {
-        $users = static::find() // выбираем юзеров из таблицы юзерс
-        ->select(['id', 'username']) // выбираем только айди и имя
-        ->asArray() // получаем в виде массива
+        $users = static::find()// выбираем юзеров из таблицы юзерс
+        ->select(['id', 'username'])// выбираем только айди и имя
+        ->asArray()// получаем в виде массива
         ->all();
 
         // в качестве индексов массива юзерс проставляем айдишники, а в качестве значений юзернейм.

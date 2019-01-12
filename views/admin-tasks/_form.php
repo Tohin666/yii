@@ -22,10 +22,10 @@ use yii\widgets\ActiveForm;
         ['prompt' => 'Select Responsible']
     ) ?>
 
-<!--    --><?//= $form->field($model, 'responsible_id')->dropDownList(
-//        \app\models\tables\Users::find()->select(['username', 'id'])->indexBy('id')->column(),
-//        ['prompt' => 'Select Responsible']
-//    ) ?>
+    <!--    --><? //= $form->field($model, 'responsible_id')->dropDownList(
+    //        \app\models\tables\Users::find()->select(['username', 'id'])->indexBy('id')->column(),
+    //        ['prompt' => 'Select Responsible']
+    //    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

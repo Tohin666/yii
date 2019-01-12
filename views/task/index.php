@@ -9,15 +9,15 @@ use yii\widgets\ActiveForm;
 <!---->
 <?php //$form = ActiveForm::begin(); ?>
 <!---->
-<?//= $form->field($model, 'title') ?>
-<?//= $form->field($model, 'description') ?>
-<?//= $form->field($model, 'responsible_id') ?>
-<?//= $form->field($model, 'status') ?>
-<?//= $form->field($model, 'start') ?>
-<?//= $form->field($model, 'end') ?>
+<? //= $form->field($model, 'title') ?>
+<? //= $form->field($model, 'description') ?>
+<? //= $form->field($model, 'responsible_id') ?>
+<? //= $form->field($model, 'status') ?>
+<? //= $form->field($model, 'start') ?>
+<? //= $form->field($model, 'end') ?>
 <!---->
 <!--    <div class="form-group">-->
-<!--        --><?//= Html::submitButton('Отправить', ['class' => 'btn btn-primary']) ?>
+<!--        --><? //= Html::submitButton('Отправить', ['class' => 'btn btn-primary']) ?>
 <!--    </div>-->
 <!---->
 <?php //ActiveForm::end(); ?>
@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
     'dataProvider' => $dataProvider,
     // каждую модель отдельно передает во вьюху
 //    'itemView' => 'view',
-    'itemView' => function($model){ // модель на каждый таск приходит из датапровайдера
+    'itemView' => function ($model) { // модель на каждый таск приходит из датапровайдера
         return \app\widgets\TaskWidget::widget(['model' => $model]);
     },
     'summary' => false,

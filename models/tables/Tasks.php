@@ -2,7 +2,6 @@
 
 namespace app\models\tables;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 

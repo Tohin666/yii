@@ -3,7 +3,6 @@
 namespace app\models\tables;
 
 use app\behaviors\MyBehavior;
-use Yii;
 
 /**
  * This is the model class for table "test".

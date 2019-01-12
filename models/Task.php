@@ -44,7 +44,7 @@ class Task extends Model
             'responsible_id' => 'Ответственный',
             'status' => 'Статус',
             'start' => 'Начало',
-            'end'=> 'Окончание'
+            'end' => 'Окончание'
         ];
     }
 

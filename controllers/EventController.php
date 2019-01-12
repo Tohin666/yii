@@ -44,8 +44,6 @@ class EventController extends Controller
 //        $model->run();
 
 
-
-
         // Обработчики выше срабатывают только для конкретной модели $model. А чтобы повесить обработчики на все
         // экземпляры класса надо вызвать метод on у класса Event
         $anonymousFunction = function ($event) {
@@ -61,7 +59,6 @@ class EventController extends Controller
 
         exit;
     }
-
 
 
     public function actionBehavior()

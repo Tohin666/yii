@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
 
-<!--    --><?php //echo \app\widgets\MyWidget::widget(['label' => 'Другой лейбл']);?>
+    <!--    --><?php //echo \app\widgets\MyWidget::widget(['label' => 'Другой лейбл']);?>
 
 
     <?= GridView::widget([
