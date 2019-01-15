@@ -6,6 +6,7 @@ use app\models\tables\Users;
 use Yii;
 use app\models\tables\Tasks;
 use app\models\filters\TasksSearch;
+use yii\caching\DbDependency;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -53,9 +54,48 @@ class AdminTasksController extends Controller
      */
     public function actionView($id)
     {
+
+        // получаем доступ к компоненту
+        $cache = \Yii::$app->cache;
+
+        // ключ по которому данные будут лежать в кэше
+//        $key = 'task';
+        // чтобы для каждого таска создавался свой кэш, добавляем к имени ключа айдишник. Иначе для всех тасков будет
+        // открываться последний закэшированный таск.
+        $key = 'task_' . $id;
+
+
+//        // получаем данные по ключу, если они там есть
+//        if ($cache->exists($key)){
+//            $task = $cache->get($key);
+//        } else {
+//            // если данных в кэше нет, то получаем их и сохраняем в кэш
+//            $task = $this->findModel($id);
+//            $cache->set($key, $task, 60);
+//        }
+
+
+        // Создаем зависимость, чтобы при каких-то изменениях в базе данных сбрасывался кэш.
+        $dependency = new DbDependency();
+        // Кэш будет сбрасываться при изменении количества строк в таблице.
+        $dependency->sql = "SELECT COUNT(*) FROM tasks";
+
+
+        // При зависимости он обнуляет значение по ключу, но сам ключ остается, поэтому перепишем условие
+        if (!$task = $cache->get($key)){
+            // если данных в кэше нет под данному ключу, то получаем их и сохраняем в кэш под данному ключу
+            $task = $this->findModel($id);
+            $cache->set($key, $task, 200, $dependency);
+        }
+
+
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $task,
         ]);
+//        return $this->render('view', [
+//            'model' => $this->findModel($id),
+//        ]);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace app\models\tables;
 
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "tasks".
@@ -29,6 +30,8 @@ class Tasks extends ActiveRecord
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
+                // если вместо метки времени UNIX используется datetime (для MySQL):
+                'value' => new Expression('NOW()'),
             ],
         ];
     }

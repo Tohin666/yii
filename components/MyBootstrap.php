@@ -64,7 +64,7 @@ class MyBootstrap extends Component implements BootstrapInterface
                 ->setFrom(['admin@mail.ru' => 'admin'])
                 ->setSubject("You received new task: {$task->title}")
                 ->setTextBody(
-                    "Dear {$user->username}, you received new task: {$task->description}. 
+                    "Dear {$user->username}, you received new task: {$task->description}.
                     Task link: " . \yii\helpers\Url::toRoute(['task/view', 'id' => $task->id], true)
                 )
                 ->send();
