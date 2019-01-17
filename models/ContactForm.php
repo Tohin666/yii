@@ -26,7 +26,7 @@ class ContactForm extends Model
             // name, email, subject and body are required
             [['name', 'email', 'subject', 'body'], 'required'],
             // it's my validation. На js проверки не будет.
-            ['name', 'myValidate'],
+//            ['name', 'myValidate'],
             // email has to be a valid email address
             ['email', 'email'],
             // verifyCode needs to be entered correctly

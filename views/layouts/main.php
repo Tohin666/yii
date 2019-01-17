@@ -41,6 +41,7 @@ AppAsset::register($this);
             ['label' => 'Hello!', 'url' => ['/hello/index']],
             ['label' => 'Users', 'url' => ['/admin-users/index']],
             ['label' => 'Tasks', 'url' => ['/task/index']],
+            ['label' => 'MyTasks', 'url' => ['/user/index']],
             ['label' => 'Admin-Tasks', 'url' => ['/admin-tasks/index']],
 //            ['label' => 'Tasks', 'url' => ['/task/index']],
             ['label' => 'db', 'url' => ['/db/index']],

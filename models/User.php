@@ -15,6 +15,9 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public $email;
     public $role_id;
 
+    public $created_at;
+    public $updated_at;
+
 //    private static $users = [
 //        '100' => [
 //            'id' => '100',

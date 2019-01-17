@@ -4,7 +4,9 @@ namespace app\controllers;
 
 use app\actions\HelloAction;
 use Yii;
+use yii\caching\DbDependency;
 use yii\filters\AccessControl;
+use yii\filters\PageCache;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -20,6 +22,20 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
+            // кэширование целой страницы задается в поведении контроллера при помощи класса PageCache
+            'cache' => [
+                'class' => PageCache::class,
+                // перечисляем экшены на которые будет распространятся это правило
+                'only' => ['contact'],
+                // дальше все как и с кэшированием фрагментов
+                'duration' => 200,
+                'enabled' => Yii::$app->request->isGet,
+//                'dependency' => [
+//                    'class' => DbDependency::class,
+//                    'sql' => "SELECT COUNT(*) FROM tasks",
+//                ],
+                'variations' => [Yii::$app->language],
+            ],
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['logout'],
@@ -31,8 +47,10 @@ class SiteController extends Controller
                     ],
                 ],
             ],
+            // фильтры ограничивают действия контроллеров.
             'verbs' => [
                 'class' => VerbFilter::className(),
+                // экшен логаут сработает только при запросе пост.
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -85,7 +103,8 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect(['user/index']);
+//            return $this->goBack();
         }
 
         $model->password = '';

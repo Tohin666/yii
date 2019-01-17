@@ -1,4 +1,4 @@
-<?php
+<?php /* @var $model \app\models\tables\Tasks */
 
 use yii\helpers\Html;
 
@@ -11,8 +11,7 @@ use yii\helpers\Html;
     <li><label><?= $model->getAttributeLabel('description') ?></label>:
         <?= Html::encode($model->description) ?></li>
     <li><label><?= $model->getAttributeLabel('responsible_id') ?></label>:
-        <?= Html::encode($model->responsible_id) ?></li>
-    <li><label><?= $model->getAttributeLabel('status') ?></label>: <?= Html::encode($model->status) ?></li>
-    <li><label><?= $model->getAttributeLabel('start') ?></label>: <?= Html::encode($model->start) ?></li>
-    <li><label><?= $model->getAttributeLabel('end') ?></label>: <?= Html::encode($model->end) ?></li>
+        <?= Html::encode($model->users->username) ?></li>
+    <li><label><?= $model->getAttributeLabel('date') ?></label>: <?= Html::encode($model->date) ?></li>
+
 </ul>

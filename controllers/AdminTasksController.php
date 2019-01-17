@@ -56,13 +56,13 @@ class AdminTasksController extends Controller
     {
 
         // получаем доступ к компоненту
-        $cache = \Yii::$app->cache;
+//        $cache = \Yii::$app->cache;
 
         // ключ по которому данные будут лежать в кэше
 //        $key = 'task';
         // чтобы для каждого таска создавался свой кэш, добавляем к имени ключа айдишник. Иначе для всех тасков будет
         // открываться последний закэшированный таск.
-        $key = 'task_' . $id;
+//        $key = 'task_' . $id;
 
 
 //        // получаем данные по ключу, если они там есть
@@ -76,26 +76,32 @@ class AdminTasksController extends Controller
 
 
         // Создаем зависимость, чтобы при каких-то изменениях в базе данных сбрасывался кэш.
-        $dependency = new DbDependency();
-        // Кэш будет сбрасываться при изменении количества строк в таблице.
-        $dependency->sql = "SELECT COUNT(*) FROM tasks";
+//        $dependency = new DbDependency();
+//        // Кэш будет сбрасываться при изменении количества строк в таблице.
+//        $dependency->sql = "SELECT COUNT(*) FROM tasks";
+//
+//
+//        // При зависимости он обнуляет значение по ключу, но сам ключ остается, поэтому перепишем условие
+//        if (!$task = $cache->get($key)){
+//            // если данных в кэше нет под данному ключу, то получаем их и сохраняем в кэш под данному ключу
+//            $task = $this->findModel($id);
+//            $cache->set($key, $task, 200, $dependency);
+//        }
 
 
-        // При зависимости он обнуляет значение по ключу, но сам ключ остается, поэтому перепишем условие
-        if (!$task = $cache->get($key)){
-            // если данных в кэше нет под данному ключу, то получаем их и сохраняем в кэш под данному ключу
-            $task = $this->findModel($id);
-            $cache->set($key, $task, 200, $dependency);
-        }
 
-
-
-        return $this->render('view', [
-            'model' => $task,
-        ]);
+//        return $this->render('view', [
+//            'model' => $task,
+//        ]);
 //        return $this->render('view', [
 //            'model' => $this->findModel($id),
 //        ]);
+
+
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+
     }
 
     /**

@@ -60,7 +60,7 @@ CREATE TABLE `migration` (
 
 LOCK TABLES `migration` WRITE;
 /*!40000 ALTER TABLE `migration` DISABLE KEYS */;
-INSERT INTO `migration` VALUES ('m000000_000000_base',1545469072),('m181222_082741_create_tasks_table',1545469104),('m181222_114504_create_users_table',1545679688),('m181225_100015_create_roles_table',1545732339),('m190112_141400_add_created_at_column_to_tasks_table',1547303060),('m190112_141657_add_updated_at_column_to_tasks_table',1547303060),('m190112_141733_add_created_at_column_to_users_table',1547303060),('m190112_141759_add_updated_at_column_to_users_table',1547303061);
+INSERT INTO `migration` VALUES ('m000000_000000_base',1545469072),('m181222_082741_create_tasks_table',1545469104),('m181222_114504_create_users_table',1545679688),('m181225_100015_create_roles_table',1545732339),('m190114_182535_add_datetime_columns_to_tasks_table',1547490739),('m190114_183055_add_datetime_columns_to_users_table',1547490739);
 /*!40000 ALTER TABLE `migration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,12 +101,12 @@ CREATE TABLE `tasks` (
   `date` datetime NOT NULL,
   `description` text,
   `responsible_id` int(11) DEFAULT NULL,
-  `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_tasks_responsible` (`responsible_id`),
   CONSTRAINT `fk_tasks_users_responsible` FOREIGN KEY (`responsible_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +115,7 @@ CREATE TABLE `tasks` (
 
 LOCK TABLES `tasks` WRITE;
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` VALUES (1,'Task1','2018-12-22 09:36:03','This is desc',2,NULL,NULL),(2,'Task2','2018-12-22 00:00:00','This other desc',1,NULL,NULL),(3,'New','2018-12-22 09:36:03','Опясание',NULL,NULL,1547303772),(4,'New2','2018-12-23 09:36:03','калямаля',3,NULL,NULL),(5,'Новая задача','2018-12-28 09:36:03','Это новая задача',1,NULL,NULL),(6,'Еще одна задача','2018-12-29 09:36:39','Тут описание',2,NULL,NULL),(7,'Отправить емайл','2018-12-22 09:36:03','Отправить пользователю емайл',2,NULL,NULL);
+INSERT INTO `tasks` VALUES (1,'Task11','2018-12-22 09:36:03','This is desc',2,NULL,NULL),(2,'Task2226','2018-12-22 09:36:03','This other desc',1,NULL,'2019-01-17 09:13:09'),(4,'New22','2018-12-22 09:36:03','калямаля',3,NULL,'2019-01-17 09:14:13'),(5,'Новая задача','2018-12-28 09:36:03','Это новая задача',1,NULL,NULL),(6,'Еще одна задача','2018-12-29 09:36:39','Тут описание',2,NULL,NULL),(7,'Отправить емайл','2018-12-22 09:36:03','Отправить пользователю емайл',2,NULL,NULL),(8,'Проверка email','2019-01-22 09:36:03','Это проверка email 2',3,NULL,NULL),(9,'New email task','2019-12-22 09:36:03','This is new mail task',2,NULL,NULL),(10,'Other task','2019-02-22 09:36:03','This is another task!',1,'2019-01-14 21:56:00','2019-01-14 21:56:00'),(11,'Very New Task','2019-01-16 09:36:03','sdfasdfsadf',2,'2019-01-16 13:06:10','2019-01-16 13:06:10');
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,8 +159,8 @@ CREATE TABLE `users` (
   `authKey` varchar(255) DEFAULT NULL,
   `accessToken` varchar(255) DEFAULT NULL,
   `role_id` int(11) DEFAULT NULL,
-  `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_users_roles` (`role_id`),
   CONSTRAINT `fk_users_roles` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
@@ -173,7 +173,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin','admin','admin@mail.ru','','',1,NULL,1547304168),(2,'user','user','user@mail.ru','','',2,NULL,NULL),(3,'Vasya','password','vasya@mail.ru','','',2,NULL,NULL);
+INSERT INTO `users` VALUES (1,'admin','admin','admin@mail.ru','','',1,NULL,NULL),(2,'user','user','user@mail.ru','','',2,NULL,NULL),(3,'Vasya','password','vasya@mail.ru','','',2,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -186,4 +186,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-12 17:59:22
+-- Dump completed on 2019-01-17 12:43:00

@@ -5,23 +5,26 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<!--    <h1>Создать новую задачу:</h1>-->
-<!---->
-<?php //$form = ActiveForm::begin(); ?>
-<!---->
-<? //= $form->field($model, 'title') ?>
-<? //= $form->field($model, 'description') ?>
-<? //= $form->field($model, 'responsible_id') ?>
-<? //= $form->field($model, 'status') ?>
-<? //= $form->field($model, 'start') ?>
-<? //= $form->field($model, 'end') ?>
-<!---->
-<!--    <div class="form-group">-->
-<!--        --><? //= Html::submitButton('Отправить', ['class' => 'btn btn-primary']) ?>
-<!--    </div>-->
-<!---->
-<?php //ActiveForm::end(); ?>
+<br>
+<p>
+    <?= Html::a('Create Tasks', ['create'], ['class' => 'btn btn-success']) ?>
+</p>
+<br>
 
+
+<?= Html::beginForm(['index']) ?>
+
+<?= Html::dropDownList('year', 2019, [2017 => 2017, 2018 => 2018, 2019 => 2019]) ?>
+<?= Html::dropDownList('month', 'jan', [
+    '01' => 'jan', '02' => 'feb', '03' => 'mar', '04' => 'apr', '05' => 'may', '06' => 'jun',
+    '07' => 'jul', '08' => 'aug', '09' => 'sep', '10' => 'oct', '11' => 'nov', '12' => 'dec',
+]) ?>
+
+<div class="form-group">
+    <?= Html::submitButton('Filter', ['class' => 'btn btn-primary']) ?>
+</div>
+
+<?= Html::endForm() ?>
 
 
 
@@ -40,3 +43,8 @@ use yii\widgets\ActiveForm;
 //    ]
 
 ]); ?>
+
+
+
+
+
