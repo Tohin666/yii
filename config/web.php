@@ -4,16 +4,27 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
+    // язык сначала ищет пол локали, напр. US, если не найдет, то значит по языку, напр. en.
+    'language' => 'en',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'myBootstrap'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
+        '@img' => '@app/web/img',
     ],
     'components' => [
+        'i18n' => [
+            'translations' => [
+                'main*' => [
+                    'class' => yii\i18n\PhpMessageSource::class,
+                    'basePath' => '@app/messages',
+                ]
+            ]
+        ],
         'myBootstrap' => [
-          'class' => 'app\components\MyBootstrap'
+            'class' => 'app\components\MyBootstrap'
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation

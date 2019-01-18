@@ -29,7 +29,8 @@ class SiteController extends Controller
                 'only' => ['contact'],
                 // дальше все как и с кэшированием фрагментов
                 'duration' => 200,
-                'enabled' => Yii::$app->request->isGet,
+//                'enabled' => Yii::$app->request->isGet,
+                'enabled' => false,
 //                'dependency' => [
 //                    'class' => DbDependency::class,
 //                    'sql' => "SELECT COUNT(*) FROM tasks",

@@ -16,15 +16,16 @@ class TaskController extends Controller
 
         if ($post = \Yii::$app->request->post()) {
             // если делаем фильтр по месяцам
-            $dataProvider = new ActiveDataProvider([
-                'query' => Tasks::find()->where(['like', 'date', $post['year'] . '-' . $post['month']])
-            ]);
+            $query = Tasks::find()->where(['YEAR(date)' => $post['year'], 'MONTH(date)' => $post['month']]);
+//            $query = Tasks::find()->where(['like', 'date', $post['year'] . '-' . $post['month']]);
         } else {
-            // подготавливаем датапровайдер для списка тасков (листвью)
-            $dataProvider = new ActiveDataProvider([
-                'query' => Tasks::find()
-            ]);
+            $query = Tasks::find();
         }
+
+        // подготавливаем датапровайдер для списка тасков (листвью)
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider
@@ -81,6 +82,7 @@ class TaskController extends Controller
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
 
+            // если отправлены данные и они успешно приняты, то перенаправляем на страницу успешного подтверждения.
             return $this->render('task-confirm', ['model' => $model]);
 
         } else {
