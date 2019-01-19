@@ -35,6 +35,8 @@ class Upload extends Model
             // чтобы создать уменьшенную копию обращаемся к классу имедж именно из yii\imagine
             Image::thumbnail($filenameWithPath, 100, 100)
                 ->save(\Yii::getAlias("@img/small/{$filename}"));
+
+            return $filename;
         }
 
 

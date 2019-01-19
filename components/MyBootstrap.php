@@ -50,6 +50,7 @@ class MyBootstrap extends Component implements BootstrapInterface
     public function bootstrap($app)
     {
         $this->myAttachEventsHandlers();
+        $this->changeLanguage();
     }
 
     protected function myAttachEventsHandlers()
@@ -69,6 +70,15 @@ class MyBootstrap extends Component implements BootstrapInterface
                 )
                 ->send();
         });
+    }
+
+    public function changeLanguage()
+    {
+        $session = Yii::$app->session;
+        if ($session['language']) {
+            \Yii::$app->language = $session['language'];
+        }
+
     }
 
 

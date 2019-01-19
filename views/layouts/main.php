@@ -60,7 +60,8 @@ AppAsset::register($this);
                 )
                 . Html::endForm()
                 . '</li>'
-            )
+            ),
+            ['label' => strtoupper(Yii::$app->language), 'url' => ['/site/language']],
         ],
     ]);
     NavBar::end();

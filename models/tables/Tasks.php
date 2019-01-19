@@ -17,6 +17,7 @@ use yii\db\Expression;
  *
  * @property Test $test
  * @property Users $users
+ * @property Comments $comments
  */
 class Tasks extends ActiveRecord
 {
@@ -86,5 +87,12 @@ class Tasks extends ActiveRecord
     {
         return $this->hasOne(Users::class, ["id" => "responsible_id"]);
 
+    }
+
+
+    public function getComments()
+    {
+        return $this->hasMany(Comments::class, ["task_id" => "id"]); // ключ - куда ссылается, значение - атрибут
+        // текущего класса
     }
 }

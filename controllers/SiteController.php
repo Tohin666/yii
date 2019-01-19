@@ -170,4 +170,16 @@ class SiteController extends Controller
             return $this->render('entry', ['model' => $model]);
         }
     }
+
+
+    public function actionLanguage()
+    {
+        $session = Yii::$app->session;
+        if (\Yii::$app->language == "ru") {
+            $session['language'] = "en";
+        } else {
+            $session['language'] = "ru";
+        }
+        $this->goBack();
+    }
 }

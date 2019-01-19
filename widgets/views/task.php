@@ -2,7 +2,7 @@
 
 <div class="task-container col-md-4">
     <!--<a href="http://yii/index.php?r=admin-tasks/view&id=1"> //использование домена в ссылках - плохая практика.-->
-    <a href="<?= \yii\helpers\Url::toRoute(['task/view', 'id' => $model->id]) ?>">
+        <a href="<?= \yii\helpers\Url::toRoute(['task/view', 'id' => $model->id]) ?>">
         <div class="bg-info task-preview" style="
             /*background: #f5f5f5;*/
             border-radius: 10px;

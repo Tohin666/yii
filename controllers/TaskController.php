@@ -2,11 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\tables\Comments;
 use app\models\tables\Tasks;
 use app\models\tables\Users;
 use app\models\Task;
+use app\models\Upload;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use yii\web\UploadedFile;
 
 class TaskController extends Controller
 {
@@ -71,8 +74,44 @@ class TaskController extends Controller
     public function actionView($id)
     {
         $model = Tasks::findOne($id);
-
         return $this->render('view', ['model' => $model]);
+
+//        $task = Tasks::findOne($id);
+//        $comments = Comments::find()->where(['task_id' => $id])->all();
+//        var_dump($comments);exit;
+//
+//        return $this->render('view', ['model' => $model]);
+    }
+
+
+    public function actionAddComment()
+    {
+        $taskId = \Yii::$app->request->get('id');
+
+        $model = new Comments();
+
+//        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+//            return $this->redirect(['view', 'id' => $model->task_id]);
+//        }
+
+        if ($model->load(\Yii::$app->request->post())) {
+
+            if ($file = UploadedFile::getInstance($model, 'photo')) {
+                $uploadModel = new Upload();
+                $uploadModel->file = $file;
+                $filename = $uploadModel->upload();
+                $model->photo = $filename;
+            }
+
+                $model->save();
+
+
+            return $this->redirect(['view', 'id' => $model->task_id]);
+        }
+
+
+
+        return $this->render('add-comment', ['model' => $model, 'taskId' => $taskId]);
     }
 
 
