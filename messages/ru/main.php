@@ -7,6 +7,7 @@ return [
     'TaskDescription' => 'Описание: ',
     'TaskDate' => 'Дата: ',
     'TaskResponsible' => 'Ответственный: ',
+    'TaskStatus' => 'Статус: ',
     'TaskComments' => 'Комментарии: ',
     'TaskAddComment' => 'Комментировать',
 ];

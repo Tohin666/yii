@@ -5,6 +5,7 @@ namespace app\models\tables;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use Yii;
 
 /**
  * This is the model class for table "tasks".
@@ -14,6 +15,7 @@ use yii\db\Expression;
  * @property string $date
  * @property string $description
  * @property int $responsible_id
+ * @property int $status
  *
  * @property Test $test
  * @property Users $users
@@ -54,7 +56,7 @@ class Tasks extends ActiveRecord
         return [
             [['title', 'date'], 'required'],
             [['description', 'date'], 'string'],
-            [['responsible_id'], 'integer'],
+            [['responsible_id', 'status'], 'integer'],
             [['title'], 'string', 'max' => 255],
         ];
     }
@@ -66,10 +68,11 @@ class Tasks extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
+            'title' => Yii::t("main", "TaskTitle"),
             'date' => 'Date',
             'description' => 'Description',
             'responsible_id' => 'Responsible ID',
+            'status' => Yii::t("main", "TaskStatus"),
         ];
     }
 
@@ -82,7 +85,7 @@ class Tasks extends ActiveRecord
     }
 
 
-    // геттер. при запросе ответственного привяжет его имя по айди. название метода немного не правильное.
+    // геттер. при запросе ответственного привяжет его имя по айди. название метода немного не правильное?.
     public function getUsers()
     {
         return $this->hasOne(Users::class, ["id" => "responsible_id"]);

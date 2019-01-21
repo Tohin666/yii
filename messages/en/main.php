@@ -7,6 +7,7 @@ return [
     'TaskDescription' => 'Description: ',
     'TaskDate' => 'Date: ',
     'TaskResponsible' => 'Responsible: ',
+    'TaskStatus' => 'Status: ',
     'TaskComments' => 'Comments: ',
     'TaskAddComment' => 'Add Comment',
 ];
