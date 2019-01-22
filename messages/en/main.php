@@ -10,4 +10,5 @@ return [
     'TaskStatus' => 'Status: ',
     'TaskComments' => 'Comments: ',
     'TaskAddComment' => 'Add Comment',
+    'Save' => 'Save',
 ];

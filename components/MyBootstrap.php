@@ -72,7 +72,7 @@ class MyBootstrap extends Component implements BootstrapInterface
         });
     }
 
-    public function changeLanguage()
+    protected function changeLanguage()
     {
         $session = Yii::$app->session;
         if ($session['language']) {

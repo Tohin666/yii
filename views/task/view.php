@@ -1,6 +1,11 @@
 <?php
 /* @var $model \app\models\tables\Tasks */
 /* @var $statusesList \app\models\tables\TaskStatuses[] */
+/* @var $usersList \app\models\tables\Users[] */
+/* @var $userId integer */
+/* @var $taskCommentForm \app\models\tables\Comments */
+
+/* @var $taskAttachmentsForm \app\models\forms\TaskAttachmentsAddForm */
 
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
@@ -16,17 +21,53 @@ use yii\helpers\Html;
             padding: 20px 50px;
             /*max-width: 350px*/
     ">
-        // прописываем экшн сейв, чтобы при сохранении перенаправлялос на него
-        <?php $form = ActiveForm::begin(['action' => Url::to(['task/save', 'id' => $model->id])]) ?>
+        <?php
+        // прописываем экшн сейв, чтобы при сохранении перенаправлялось на него
+        $form = ActiveForm::begin(['action' => Url::to(['task/save', 'id' => $model->id])])
+        ?>
         <h2><?= $form->field($model, 'title') ?></h2><br>
-        <p><?= Yii::t("main", "TaskDescription") . $model->description ?></p><br>
-        <h3><?= Yii::t("main", "TaskDate") . $model->date ?></h3>
-        <h4><?= Yii::t("main", "TaskResponsible") . $model->users->username ?></h4><br>
-        <h4><?= $form->field($model, 'status') -> dropDownList($statusesList) ?></h4><br>
+        <p><?= $form->field($model, 'description')->textarea() ?></p><br>
+        <h3><?= $form->field($model, 'date')->textInput(['type' => 'date']) ?></h3>
+        <h4><?= $form->field($model, 'responsible_id')->dropDownList($usersList) ?></h4><br>
+        <h4><?= $form->field($model, 'status')->dropDownList($statusesList) ?></h4><br>
+        <?= Html::submitButton(Yii::t("main", "Save"), ['class' => 'btn btn-success']) ?>
+        <?php ActiveForm::end() ?>
+        <hr>
+
+
+        <h3>Вложения</h3>
+        <?php $form = ActiveForm::begin(['action' => Url::to(['add-attachment'])]) ?>
+        <?= $form->field($taskAttachmentsForm, 'taskId')->hiddenInput(['value' => $model->id])
+            ->label(false) ?>
+        <?= $form->field($taskAttachmentsForm, 'file')->fileInput(); ?>
+        <?= Html::submitButton("Добавить", ['class' => 'btn btn-default']) ?>
+        <?php ActiveForm::end() ?><br>
+
+        <?php foreach ($model->taskAttachments as $file): ?>
+            <?= Html::a(
+                Html::img(Url::to(
+                    "@web/img/tasks/small/" . $file->path, true)),
+                Url::to("@web/img/tasks/" . $file->path, true)
+            ) ?>
+        <?php endforeach; ?>
+        <hr>
+
+
+        <?php $form = ActiveForm::begin(['action' => Url::to(['add-comment'])]) ?>
+        <?= $form->field($taskCommentForm, 'user_id')->hiddenInput(['value' => $userId])->label(false) ?>
+        <?= $form->field($taskCommentForm, 'task_id')->hiddenInput(['value' => $model->id])
+            ->label(false) ?>
+        <?= $form->field($taskCommentForm, 'comment')->textarea()
+            ->label(Yii::t('main', "TaskAddComment")) ?>
+        <?= $form->field($taskCommentForm, 'photo')->fileInput(); ?>
+        <?= Html::submitButton(Yii::t("main", "TaskAddComment"), ['class' => 'btn btn-default']) ?>
+        <?php ActiveForm::end() ?>
+        <hr>
+
         <h3><?= Yii::t("main", "TaskComments") ?></h3><br>
         <?php foreach ($model->comments as $comment): ?>
             <p>
-                <i><?= $comment->created_at ?></i><br>
+                <strong><?= $comment->user->username ?></strong> <i><?= $comment->created_at ?></i><br>
                 <?= $comment->comment ?><br>
                 <?php if ($comment->photo): ?>
                     <?= Html::a(
@@ -38,10 +79,10 @@ use yii\helpers\Html;
             </p><br>
         <?php endforeach; ?>
         <br>
-        <p>
-            <?= Html::a(Yii::t("main", "TaskAddComment"),
-                ['add-comment', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
-        </p>
+        <!--        <p>-->
+        <!--            --><? //= Html::a(Yii::t("main", "TaskAddComment"),
+        //                ['add-comment', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+        <!--        </p>-->
 
     </div>
 

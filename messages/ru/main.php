@@ -10,4 +10,5 @@ return [
     'TaskStatus' => 'Статус: ',
     'TaskComments' => 'Комментарии: ',
     'TaskAddComment' => 'Комментировать',
+    'Save' => 'Сохранить',
 ];

@@ -180,6 +180,6 @@ class SiteController extends Controller
         } else {
             $session['language'] = "ru";
         }
-        $this->goBack();
+        $this->redirect(Yii::$app->request->referrer);
     }
 }

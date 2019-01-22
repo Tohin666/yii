@@ -29,10 +29,13 @@ CREATE TABLE `comments` (
   `photo` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_tasks_comments` (`task_id`),
+  KEY `fk_comments_users` (`user_id`),
+  CONSTRAINT `fk_comments_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_tasks_comments` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +44,7 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` VALUES (1,1,'Камент',NULL,'2019-01-19 07:39:42','2019-01-19 07:39:42'),(2,1,'Второй камент',NULL,'2019-01-19 08:39:36','2019-01-19 08:39:36'),(23,1,'Третий камент','','2019-01-19 12:34:44','2019-01-19 12:34:44'),(24,1,'Четвертый','','2019-01-19 12:40:34','2019-01-19 12:40:34'),(25,1,'Еще камент','1489702320_2.jpg','2019-01-19 13:48:44','2019-01-19 13:48:44'),(26,1,'Еще один камент','SOLID.png','2019-01-19 14:19:24','2019-01-19 14:19:24'),(27,2,'Новый камент','1489702320_2.jpg','2019-01-19 14:20:08','2019-01-19 14:20:08');
+INSERT INTO `comments` VALUES (1,1,'Камент',NULL,'2019-01-19 07:39:42','2019-01-19 07:39:42',3),(2,1,'Второй камент',NULL,'2019-01-19 08:39:36','2019-01-19 08:39:36',2),(23,1,'Третий камент','','2019-01-19 12:34:44','2019-01-19 12:34:44',NULL),(24,1,'Четвертый','','2019-01-19 12:40:34','2019-01-19 12:40:34',1),(25,1,'Еще камент','1489702320_2.jpg','2019-01-19 13:48:44','2019-01-19 13:48:44',2),(26,1,'Еще один камент','SOLID.png','2019-01-19 14:19:24','2019-01-19 14:19:24',3),(27,2,'Новый камент','1489702320_2.jpg','2019-01-19 14:20:08','2019-01-19 14:20:08',1),(28,1,'sasdfasdf',NULL,'2019-01-21 22:27:34','2019-01-21 22:27:34',1),(29,1,'3333333333333333',NULL,'2019-01-21 22:28:11','2019-01-21 22:28:11',NULL),(30,1,'SOLID','SOLID.png','2019-01-21 22:34:22','2019-01-21 22:34:22',NULL);
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +93,7 @@ CREATE TABLE `migration` (
 
 LOCK TABLES `migration` WRITE;
 /*!40000 ALTER TABLE `migration` DISABLE KEYS */;
-INSERT INTO `migration` VALUES ('m000000_000000_base',1545469072),('m181222_082741_create_tasks_table',1545469104),('m181222_114504_create_users_table',1545679688),('m181225_100015_create_roles_table',1545732339),('m190114_182535_add_datetime_columns_to_tasks_table',1547490739),('m190114_183055_add_datetime_columns_to_users_table',1547490739),('m190119_051422_create_comments_table',1547879783);
+INSERT INTO `migration` VALUES ('m000000_000000_base',1545469072),('m181222_082741_create_tasks_table',1545469104),('m181222_114504_create_users_table',1545679688),('m181225_100015_create_roles_table',1545732339),('m190114_182535_add_datetime_columns_to_tasks_table',1547490739),('m190114_183055_add_datetime_columns_to_users_table',1547490739),('m190119_051422_create_comments_table',1547879783),('m190121_103953_create_task_statuses_table',1548068467),('m190121_110356_create_attachments_table',1548069729);
 /*!40000 ALTER TABLE `migration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,6 +122,57 @@ INSERT INTO `roles` VALUES (1,'Administrator'),(2,'Editor');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `task_attachments`
+--
+
+DROP TABLE IF EXISTS `task_attachments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `task_attachments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_id` int(11) DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_attachments_tasks` (`task_id`),
+  CONSTRAINT `fk_attachments_tasks` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `task_attachments`
+--
+
+LOCK TABLES `task_attachments` WRITE;
+/*!40000 ALTER TABLE `task_attachments` DISABLE KEYS */;
+INSERT INTO `task_attachments` VALUES (2,1,'YtvzL59ioKnH.jpg'),(3,1,'9loleSVb6Mh8.png');
+/*!40000 ALTER TABLE `task_attachments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `task_statuses`
+--
+
+DROP TABLE IF EXISTS `task_statuses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `task_statuses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `task_statuses`
+--
+
+LOCK TABLES `task_statuses` WRITE;
+/*!40000 ALTER TABLE `task_statuses` DISABLE KEYS */;
+INSERT INTO `task_statuses` VALUES (1,'Новая'),(2,'В работе'),(3,'Выполнена'),(4,'Тестирование'),(5,'Доработка'),(6,'Закрыта');
+/*!40000 ALTER TABLE `task_statuses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tasks`
 --
 
@@ -133,10 +187,13 @@ CREATE TABLE `tasks` (
   `responsible_id` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_tasks_responsible` (`responsible_id`),
+  KEY `fk_task_statuses` (`status`),
+  CONSTRAINT `fk_task_statuses` FOREIGN KEY (`status`) REFERENCES `task_statuses` (`id`),
   CONSTRAINT `fk_tasks_users_responsible` FOREIGN KEY (`responsible_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -145,7 +202,7 @@ CREATE TABLE `tasks` (
 
 LOCK TABLES `tasks` WRITE;
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` VALUES (1,'Task11','2018-12-22 09:36:03','This is desc',2,NULL,NULL),(2,'Task2226','2018-12-22 09:36:03','This other desc',1,NULL,'2019-01-17 09:13:09'),(4,'New22','2018-12-22 09:36:03','калямаля',3,NULL,'2019-01-17 09:14:13'),(5,'Новая задача','2018-12-28 09:36:03','Это новая задача',1,NULL,NULL),(6,'Еще одна задача','2018-12-29 09:36:39','Тут описание',2,NULL,NULL),(7,'Отправить емайл','2018-12-22 09:36:03','Отправить пользователю емайл',2,NULL,NULL),(8,'Проверка email','2019-01-22 09:36:03','Это проверка email 2',3,NULL,NULL),(9,'New email task','2019-12-22 09:36:03','This is new mail task',2,NULL,NULL),(10,'Other task','2019-02-22 09:36:03','This is another task!',1,'2019-01-14 21:56:00','2019-01-14 21:56:00'),(11,'Very New Task','2019-01-16 09:36:03','sdfasdfsadf',2,'2019-01-16 13:06:10','2019-01-16 13:06:10');
+INSERT INTO `tasks` VALUES (1,'Task11','2019-01-21 00:00:00','This is desc',2,NULL,'2019-01-21 19:52:15',1),(2,'Task2226','2018-12-22 09:36:03','This other desc',1,NULL,'2019-01-17 09:13:09',1),(4,'New22','2018-12-22 09:36:03','калямаля',3,NULL,'2019-01-17 09:14:13',1),(5,'Новая задача','2018-12-28 09:36:03','Это новая задача',1,NULL,NULL,1),(6,'Еще одна задача','2018-12-29 09:36:39','Тут описание',2,NULL,NULL,1),(7,'Отправить емайл','2018-12-22 09:36:03','Отправить пользователю емайл',2,NULL,NULL,1),(8,'Проверка email','2019-01-22 09:36:03','Это проверка email 2',3,NULL,NULL,1),(9,'New email task','2019-12-22 09:36:03','This is new mail task',2,NULL,NULL,1),(10,'Other task','2019-02-22 09:36:03','This is another task!',1,'2019-01-14 21:56:00','2019-01-14 21:56:00',1),(11,'Very New Task','2019-01-16 09:36:03','sdfasdfsadf',2,'2019-01-16 13:06:10','2019-01-16 13:06:10',1),(12,'Криэйт','2019-01-21 00:00:00','Оп',1,'2019-01-21 19:24:46','2019-01-21 19:24:46',1),(13,'ывафыва','2019-01-22 00:00:00','ывафыва',2,'2019-01-21 19:52:41','2019-01-21 19:52:41',1);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -216,4 +273,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-19 15:44:47
+-- Dump completed on 2019-01-22 14:53:38

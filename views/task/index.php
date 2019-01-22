@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 
 <br>
 <p>
-    <?= Html::a('Create Tasks', ['create'], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('Create Tasks', ['view'], ['class' => 'btn btn-success']) ?>
 </p>
 <br>
 

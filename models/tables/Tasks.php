@@ -19,7 +19,9 @@ use Yii;
  *
  * @property Test $test
  * @property Users $users
- * @property Comments $comments
+ * @property Comments[] $comments
+ * @property TaskAttachments[] $taskAttachments
+ * @property TaskStatuses $statusName
  */
 class Tasks extends ActiveRecord
 {
@@ -55,7 +57,8 @@ class Tasks extends ActiveRecord
     {
         return [
             [['title', 'date'], 'required'],
-            [['description', 'date'], 'string'],
+            [['date'], 'safe'],
+            [['description'], 'string'],
             [['responsible_id', 'status'], 'integer'],
             [['title'], 'string', 'max' => 255],
         ];
@@ -69,9 +72,9 @@ class Tasks extends ActiveRecord
         return [
             'id' => 'ID',
             'title' => Yii::t("main", "TaskTitle"),
-            'date' => 'Date',
-            'description' => 'Description',
-            'responsible_id' => 'Responsible ID',
+            'date' => Yii::t("main", "TaskDate"),
+            'description' => Yii::t("main", "TaskDescription"),
+            'responsible_id' => Yii::t("main", "TaskResponsible"),
             'status' => Yii::t("main", "TaskStatus"),
         ];
     }
@@ -96,6 +99,18 @@ class Tasks extends ActiveRecord
     public function getComments()
     {
         return $this->hasMany(Comments::class, ["task_id" => "id"]); // ключ - куда ссылается, значение - атрибут
+        // текущего класса
+    }
+
+    public function getTaskAttachments()
+    {
+        return $this->hasMany(TaskAttachments::class, ["task_id" => "id"]); // ключ - куда ссылается, значение - атрибут
+        // текущего класса
+    }
+
+    public function getStatus()
+    {
+        return $this->hasOne(TaskStatuses::class, ["id" => "status"]); // ключ - куда ссылается, значение - атрибут
         // текущего класса
     }
 }

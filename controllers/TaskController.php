@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\forms\TaskAttachmentsAddForm;
 use app\models\tables\Comments;
+use app\models\tables\TaskAttachments;
 use app\models\tables\Tasks;
 use app\models\tables\TaskStatuses;
 use app\models\tables\Users;
@@ -72,43 +74,78 @@ class TaskController extends Controller
     }
 
 
-    public function actionView($id)
+    public function actionView($id = null)
     {
-        $model = Tasks::findOne($id);
+        // Если открываем таск
+        if ($id) {
+            $model = Tasks::findOne($id);
+        //Если создаем таск
+        } else {
+            $model = new Tasks();
+        }
+
+        // в любом случае открываем таск, только в первом случае он будет заполнен, а во втором пустой.
         return $this->render('view', [
             'model' => $model,
-            'userList' => Users::getUsersList(),
+            'usersList' => Users::getUsersList(),
             'statusesList' => TaskStatuses::getTasksList(),
+            'userId' => \Yii::$app->user->id,
+            'taskCommentForm' => new Comments(),
+            'taskAttachmentsForm' => new TaskAttachmentsAddForm(),
         ]);
-
 
     }
 
 
-    public function actionSave($id)
+    public function actionSave($id = null)
     {
-        $model = new Tasks();
+        // если изменяем таск
+        if ($id) {
 
-        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+            if ($model = Tasks::findOne($id)) {
+                $model->load(\Yii::$app->request->post());
+                $model->save();
+                \Yii::$app->session->setFlash('success', "Изменения сохранены!");
+            } else {
+                \Yii::$app->session->setFlash('error', "Не удалось сохранить изменения!");
+            }
 
-            // если отправлены данные и они успешно приняты, то перенаправляем на страницу успешного подтверждения.
-            return $this->render('task-confirm', ['model' => $model]);
 
+
+        // если создаем таск
         } else {
-            // либо страница отображается первый раз, либо есть ошибка в данных
-            return $this->render('create', [
-                'model' => $model,
-                'userList' => Users::getUsersList(), // получаем и передаем дополнительно наш список пользователей в шаблон
-                // create,а там еще раз передаем в шаблон _form
-            ]);
+            $model = new Tasks();
+
+            if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+
+                // если отправлены данные и они успешно приняты, то перенаправляем назад.
+                \Yii::$app->session->setFlash('success', "Задача создана!");
+
+//                // если отправлены данные и они успешно приняты, то перенаправляем на страницу успешного подтверждения.
+////                return $this->render('task-confirm', ['model' => $model]);
+
+            } else {
+                \Yii::$app->session->setFlash('error', "Не удалось создать задачу!");
+
+//                // либо страница отображается первый раз, либо есть ошибка в данных
+//                return $this->render('create', [
+//                    'model' => $model,
+//                    'userList' => Users::getUsersList(), // получаем и передаем дополнительно наш список пользователей в шаблон
+//                    // create,а там еще раз передаем в шаблон _form
+//                ]);
+            }
+
         }
+
+
+        $this->redirect(\Yii::$app->request->referrer);
     }
 
 
 
     public function actionAddComment()
     {
-        $taskId = \Yii::$app->request->get('id');
+//        $taskId = \Yii::$app->request->get('id');
 
         $model = new Comments();
 
@@ -125,15 +162,41 @@ class TaskController extends Controller
                 $model->photo = $filename;
             }
 
-            $model->save();
+            if ($model->save()) {
+                \Yii::$app->session->setFlash('success', "Комментарий добавлен");
+            } else {
+                \Yii::$app->session->setFlash('error', "Не удалось добавить комментарий");
+            }
 
+//            return $this->redirect(['view', 'id' => $model->task_id]);
 
-            return $this->redirect(['view', 'id' => $model->task_id]);
+        } else {
+            \Yii::$app->session->setFlash('error', "Не удалось добавить комментарий");
         }
 
 
+        $this->redirect(\Yii::$app->request->referrer);
 
-        return $this->render('add-comment', ['model' => $model, 'taskId' => $taskId]);
+//        return $this->render('add-comment', ['model' => $model, 'taskId' => $taskId]);
+    }
+
+
+    public function actionAddAttachment()
+    {
+        // для загрузки файлов создали отедльную форму чтобы активрекорд этим не занимался, и чтобы не перегружать
+        // контроллер
+        $model = new TaskAttachmentsAddForm();
+        // получаем TaskId
+        $model->load(\Yii::$app->request->post());
+        // отдельно загружаем файл
+        $model->file = UploadedFile::getInstance($model, 'file');
+        // метод сейв прописали в модели TaskAttachmentsAddForm
+        if($model->save()){
+            \Yii::$app->session->setFlash('success', "Файл добавлен");
+        }else {
+            \Yii::$app->session->setFlash('error', "Не удалось добавить файл");
+        }
+        $this->redirect(\Yii::$app->request->referrer);
     }
 
 }
