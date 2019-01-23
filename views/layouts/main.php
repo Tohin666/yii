@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use app\widgets\Alert;
@@ -39,10 +40,10 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Hello!', 'url' => ['/hello/index']],
-            ['label' => 'Users', 'url' => ['/admin-users/index']],
+            ['label' => 'Users', 'url' => ['/admin/users']],
             ['label' => 'Tasks', 'url' => ['/task/index']],
             ['label' => 'MyTasks', 'url' => ['/user/index']],
-            ['label' => 'Admin-Tasks', 'url' => ['/admin-tasks/index']],
+            ['label' => 'Admin-Tasks', 'url' => ['/admin/tasks']],
 //            ['label' => 'Tasks', 'url' => ['/task/index']],
             ['label' => 'db', 'url' => ['/db/index']],
             ['label' => 'Upload', 'url' => ['/file']],
@@ -50,7 +51,7 @@ AppAsset::register($this);
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+            ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
