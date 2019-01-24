@@ -14,6 +14,11 @@ $config = [
         '@npm' => '@vendor/npm-asset',
         '@img' => '@app/web/img',
     ],
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+        ],
+    ],
     'components' => [
         'i18n' => [
             'translations' => [
@@ -63,14 +68,21 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            // будут работать только правила из rules ниже
+//            'enableStrictParsing' => true,
             'rules' => [
+                'task-view/<id>' => 'task/view',
+//                'task-view/<id:\d+>' => 'task/view',
+//                'task-view/<id:\w+>' => 'task/other',
+//                'GET task-view/<id:\d+>' => 'task/view',
+//                'POST task-view/<id:\d+>' => 'task/other',
+//                '<controller>/<action>' => 'admin/<controller>/<action>',
+
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

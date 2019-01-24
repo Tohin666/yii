@@ -2,6 +2,7 @@
 
 
 namespace app\commands;
+
 use app\models\tables\Tasks;
 use app\models\tables\Users;
 use yii\console\Controller;
@@ -27,11 +28,11 @@ class TaskController extends Controller
      */
     public function actionFind()
     {
-        $date = mktime(0, 0, 0, date('m') + 1, date('d'), date('Y'));
+        $date = mktime(0, 0, 0, date('m'), date('d') + 1, date('Y'));
         $date = date('Y-m-d', $date);
         $tasks = Tasks::find()
             ->select(['title', 'date', 'responsible_id'])
-            ->where(['>', 'date', $date])
+            ->where(['<', 'date', $date])
             ->asArray()
             ->all();
         $users = Users::find()->select(['email', 'id'])->asArray()->indexBy('id')->column();
@@ -41,13 +42,13 @@ class TaskController extends Controller
 
             \Yii::$app->mailer->compose()
                 ->setTo($users[$task['responsible_id']])
-                ->setFrom('admin@admin.ru')
+                ->setFrom(['admin@mail.ru' => 'admin'])
                 ->setSubject('Your task expired!')
-                ->setTextBody('Your task ' . $task['title'] . ' expired!')
+                ->setTextBody('Your task ' . $task['title'] . ' expire at ' . $task['date'] . '!')
                 ->send();
 
-            echo $users[$task['responsible_id']];
-            echo 'Your task ' . $task['title'] . 'expired!';
+//            echo $users[$task['responsible_id']];
+            echo 'Your task ' . $task['title'] . ' expire at ' . $task['date'] . '!';
         }
 
 
@@ -61,7 +62,7 @@ class TaskController extends Controller
     // параметры передаются из консоли через пробел
     public function actionTest($id)
     {
-        if($user = Users::findOne($id)){
+        if ($user = Users::findOne($id)) {
             // stdout вместо эхо позволяет при помощи хелпера украшать текст
             $this->stdout("{$this->message}, {$user->username}", Console::FG_RED);
             // хорошей практикой является возвращать какой-то код
@@ -75,7 +76,7 @@ class TaskController extends Controller
     {
         // отображает прогресс-бар
         Console::startProgress(0, 100);
-        for($i = 1; $i < 100; $i++){
+        for ($i = 1; $i < 100; $i++) {
             sleep(1);
             Console::updateProgress($i, 100);
         }
