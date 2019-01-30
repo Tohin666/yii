@@ -12,6 +12,7 @@ use app\models\Task;
 use app\models\Upload;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\UploadedFile;
 
 class TaskController extends Controller
@@ -76,10 +77,16 @@ class TaskController extends Controller
 
     public function actionView($id = null)
     {
+        // проверяем, может ли пользователь редактировать таски
+        if (!\Yii::$app->user->can('TaskEdit')) {
+            throw new ForbiddenHttpException();
+        }
+
+
         // Если открываем таск
         if ($id) {
             $model = Tasks::findOne($id);
-        //Если создаем таск
+            //Если создаем таск
         } else {
             $model = new Tasks();
         }
@@ -111,8 +118,7 @@ class TaskController extends Controller
             }
 
 
-
-        // если создаем таск
+            // если создаем таск
         } else {
             $model = new Tasks();
 
@@ -140,7 +146,6 @@ class TaskController extends Controller
 
         $this->redirect(\Yii::$app->request->referrer);
     }
-
 
 
     public function actionAddComment()
@@ -191,9 +196,9 @@ class TaskController extends Controller
         // отдельно загружаем файл
         $model->file = UploadedFile::getInstance($model, 'file');
         // метод сейв прописали в модели TaskAttachmentsAddForm
-        if($model->save()){
+        if ($model->save()) {
             \Yii::$app->session->setFlash('success', "Файл добавлен");
-        }else {
+        } else {
             \Yii::$app->session->setFlash('error', "Не удалось добавить файл");
         }
         $this->redirect(\Yii::$app->request->referrer);

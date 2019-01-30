@@ -7,6 +7,7 @@ use app\models\tables\Tasks;
 use app\models\tables\Users;
 use yii\console\Controller;
 use yii\console\ExitCode;
+use yii\db\ActiveQuery;
 use yii\helpers\Console;
 
 class TaskController extends Controller
@@ -28,27 +29,41 @@ class TaskController extends Controller
      */
     public function actionFind()
     {
-        $date = mktime(0, 0, 0, date('m'), date('d') + 1, date('Y'));
-        $date = date('Y-m-d', $date);
+//        /** @var ActiveQuery $tasks */
+        /** @var Tasks[] $tasks */
+
+//        $date = mktime(0, 0, 0, date('m'), date('d') + 1, date('Y'));
+//        $date = date('Y-m-d', $date);
+        // SELECT * FROM tasks WHERE DATEDIFF(tasks.date, NOW()) <=1;
         $tasks = Tasks::find()
-            ->select(['title', 'date', 'responsible_id'])
-            ->where(['<', 'date', $date])
-            ->asArray()
+            ->where('DATEDIFF(tasks.date, NOW()) <=1')
+            // жадная загрузка, подгрузка таксков по связям с ответственным (users), теперь будет всего два запроса:
+            // SELECT * FROM `tasks`;
+            // SELECT * FROM `users` WHERE `id` IN (айдишники юзеров);
+            ->with('users')
+//            ->select(['title', 'date', 'responsible_id'])
+//            ->where(['<', 'date', $date])
+//            ->asArray()
             ->all();
-        $users = Users::find()->select(['email', 'id'])->asArray()->indexBy('id')->column();
+//        $users = Users::find()->select(['email', 'id'])->asArray()->indexBy('id')->column();
 
 
+        // batch - пакетная выборка, по умолчанию по 100, получает все сразу в массив, а each делает тоже самое только
+        // получает не сразу массив, а перебирает их
+//        foreach ($tasks->each() as $task) {
         foreach ($tasks as $task) {
 
             \Yii::$app->mailer->compose()
-                ->setTo($users[$task['responsible_id']])
+                // чтобы тут не делал много лишних запросов, сделали сверху жадную загрузку
+                ->setTo($task->users->email)
+//                ->setTo($users[$task['responsible_id']])
                 ->setFrom(['admin@mail.ru' => 'admin'])
                 ->setSubject('Your task expired!')
-                ->setTextBody('Your task ' . $task['title'] . ' expire at ' . $task['date'] . '!')
+                ->setTextBody('Your task ' . $task->title . ' expire at ' . $task->date . '!')
                 ->send();
 
 //            echo $users[$task['responsible_id']];
-            echo 'Your task ' . $task['title'] . ' expire at ' . $task['date'] . '!';
+//            echo 'Your task ' . $task->title . ' expire at ' . $task->date . '!';
         }
 
 

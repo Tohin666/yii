@@ -16,6 +16,117 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `auth_assignment`
+--
+
+DROP TABLE IF EXISTS `auth_assignment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_assignment` (
+  `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`item_name`,`user_id`),
+  KEY `auth_assignment_user_id_idx` (`user_id`),
+  CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_assignment`
+--
+
+LOCK TABLES `auth_assignment` WRITE;
+/*!40000 ALTER TABLE `auth_assignment` DISABLE KEYS */;
+INSERT INTO `auth_assignment` VALUES ('admin','1',1548833787),('moderator','2',1548833787),('user','3',1548844659);
+/*!40000 ALTER TABLE `auth_assignment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_item`
+--
+
+DROP TABLE IF EXISTS `auth_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_item` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `type` smallint(6) NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `rule_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `data` blob,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`name`),
+  KEY `rule_name` (`rule_name`),
+  KEY `idx-auth_item-type` (`type`),
+  CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_item`
+--
+
+LOCK TABLES `auth_item` WRITE;
+/*!40000 ALTER TABLE `auth_item` DISABLE KEYS */;
+INSERT INTO `auth_item` VALUES ('admin',1,NULL,NULL,NULL,1548833787,1548833787),('moderator',1,NULL,NULL,NULL,1548833787,1548833787),('TaskCreate',2,NULL,NULL,NULL,1548833787,1548833787),('TaskDelete',2,NULL,NULL,NULL,1548833787,1548833787),('TaskEdit',2,NULL,NULL,NULL,1548833787,1548833787),('user',1,NULL,NULL,NULL,1548844659,1548844659);
+/*!40000 ALTER TABLE `auth_item` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_item_child`
+--
+
+DROP TABLE IF EXISTS `auth_item_child`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_item_child` (
+  `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`parent`,`child`),
+  KEY `child` (`child`),
+  CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_item_child`
+--
+
+LOCK TABLES `auth_item_child` WRITE;
+/*!40000 ALTER TABLE `auth_item_child` DISABLE KEYS */;
+INSERT INTO `auth_item_child` VALUES ('admin','TaskCreate'),('moderator','TaskCreate'),('admin','TaskDelete'),('admin','TaskEdit'),('moderator','TaskEdit'),('user','TaskEdit');
+/*!40000 ALTER TABLE `auth_item_child` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_rule`
+--
+
+DROP TABLE IF EXISTS `auth_rule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_rule` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `data` blob,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_rule`
+--
+
+LOCK TABLES `auth_rule` WRITE;
+/*!40000 ALTER TABLE `auth_rule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_rule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `comments`
 --
 
@@ -93,7 +204,7 @@ CREATE TABLE `migration` (
 
 LOCK TABLES `migration` WRITE;
 /*!40000 ALTER TABLE `migration` DISABLE KEYS */;
-INSERT INTO `migration` VALUES ('m000000_000000_base',1545469072),('m181222_082741_create_tasks_table',1545469104),('m181222_114504_create_users_table',1545679688),('m181225_100015_create_roles_table',1545732339),('m190114_182535_add_datetime_columns_to_tasks_table',1547490739),('m190114_183055_add_datetime_columns_to_users_table',1547490739),('m190119_051422_create_comments_table',1547879783),('m190121_103953_create_task_statuses_table',1548068467),('m190121_110356_create_attachments_table',1548069729);
+INSERT INTO `migration` VALUES ('m000000_000000_base',1545469072),('m140506_102106_rbac_init',1548827865),('m170907_052038_rbac_add_index_on_auth_assignment_user_id',1548827865),('m181222_082741_create_tasks_table',1545469104),('m181222_114504_create_users_table',1545679688),('m181225_100015_create_roles_table',1545732339),('m190114_182535_add_datetime_columns_to_tasks_table',1547490739),('m190114_183055_add_datetime_columns_to_users_table',1547490739),('m190119_051422_create_comments_table',1547879783),('m190121_103953_create_task_statuses_table',1548068467),('m190121_110356_create_attachments_table',1548069729);
 /*!40000 ALTER TABLE `migration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,4 +384,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-23 11:05:26
+-- Dump completed on 2019-01-30 13:45:25

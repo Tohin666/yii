@@ -20,6 +20,9 @@ $config = [
         ],
     ],
     'components' => [
+        'authManager' => [
+            'class' => \yii\rbac\DbManager::class,
+        ],
         'i18n' => [
             'translations' => [
                 'main*' => [

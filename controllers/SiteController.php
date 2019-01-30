@@ -37,11 +37,14 @@ class SiteController extends Controller
 //                ],
                 'variations' => [Yii::$app->language],
             ],
+            // AccessControl ограничевает доступ к экшенам на основе ролей
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['logout'],
                 'rules' => [
                     [
+                        // экшен логаут доступен только для авторизованных пользователей
+                        // (алиас @ - авторизованные, ? - не авторизованные)
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
